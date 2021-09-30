@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
-import { getRepositories } from "services/respositories";
+import { getRepositories } from "services/repositories.services";
 
 export const useRepositories = () => {
-  const [period, setPeriod] = useState('');
+  const [period, setPeriod] = useState('daily');
   const [language, setLanguage] = useState('');
-  const [spokenLang, setSpokenLang] = useState('');
+  const [spokenLanguage, setSpokenLanguage] = useState('');
   
-  const query = useQuery(['repositories', period, language, spokenLang], () => {
-    return getRepositories({ period, language, spokenLang });
+  const query = useQuery(['repositories', period, language, spokenLanguage], () => {
+    return getRepositories({ period, language, spokenLanguage });
   });
   
   return {
@@ -17,7 +17,7 @@ export const useRepositories = () => {
     setPeriod,
     language,
     setLanguage,
-    spokenLang,
-    setSpokenLang
+    spokenLanguage,
+    setSpokenLanguage
   };
 };

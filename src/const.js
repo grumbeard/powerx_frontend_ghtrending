@@ -1,1 +1,2 @@
-export const BASE_URL = "https://ecomm-service.herokuapp.com";
+export const TRENDING_API_BASE = 'https://api.trending-github.com';
+export const GITHUB_API_BASE = 'https://api.github.com';

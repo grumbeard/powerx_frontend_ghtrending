@@ -7,6 +7,7 @@ import "./index.css";
 import { AppShell } from './app-shell';
 import { NotFound } from 'pages/not-found';
 import { Repositories } from './pages/repositories';
+import { Repository } from 'pages/repository';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 const queryClient = new QueryClient({
@@ -21,6 +22,7 @@ ReactDOM.render(
       <QueryClientProvider client={ queryClient }>
         <AppShell>
           <Switch>
+            <Route path='/:author/:name' component={ Repository } />
             <Route path='/' exact component={ Repositories } />
             <Route path='*' component={ NotFound } />
           </Switch>

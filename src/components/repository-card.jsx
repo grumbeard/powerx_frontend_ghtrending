@@ -14,7 +14,7 @@ export const RepositoryCard = ({ repository }) => {
     avatar
   } = repository;
   return (
-    <Link to={url}>
+    <Link to={`/${author}/${name}`}>
       <div
         className="m-2 py-5 px-10 border border-gray-700 rounded-md"
       >

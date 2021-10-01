@@ -1,4 +1,4 @@
-import { TRENDING_API_BASE } from "const";
+import { TRENDING_API_BASE, GITHUB_API_BASE } from "const";
 import { fetchJson } from "lib/fetch-json";
 
 export const getRepositories = (queries) => {
@@ -22,5 +22,11 @@ export const getLanguages = () => {
 
 export const getSpokenLanguages = () => {
   let url = `${TRENDING_API_BASE}/github/spoken-languages`;
+  return fetchJson(url);
+};
+
+export const getRepository = (queries) => {
+  const { author, name } = queries;
+  let url = `${GITHUB_API_BASE}/repos/${author}/${name}`;
   return fetchJson(url);
 };

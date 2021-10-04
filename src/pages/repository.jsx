@@ -1,10 +1,16 @@
 import { EyeIcon, RepoForkedIcon, LogoGithubIcon, MentionIcon, StarIcon, LinkIcon, PeopleIcon } from '@primer/octicons-react';
 import { Badge } from 'components/badge';
 import { Button } from 'components/button';
+import { Bar } from 'components/bar';
 import { useRepository } from 'hooks/use-repositories';
 import { useState } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
+
+const createBarChart = (dict) => {
+  const total = Object.values(dict).reduce((a,b) => Number(a) + Number(b));
+  return Object.keys(dict).map(key => <Bar label={key} value={Number(dict[key])} total={total} />)
+};
 
 export const Repository = () => {
   
@@ -226,8 +232,8 @@ export const Repository = () => {
         <section className='container my-10 mx-auto'>
           <div className='py-5 px-10 border border-gray-700 rounded-t-md bg-gray-800 bg-opacity-50 text-left text-lg uppercase'>how it's made</div>
           <div className='py-5 px-10 border border-gray-700 rounded-b-md'>
-            <div className='my-2 flex'>
-              <div>{Object.keys(languages).map(lang => lang)}</div>
+            <div className='my-2 flex flex-col'>
+              {languages && createBarChart(languages)}
             </div>
           </div>
         </section>

@@ -232,9 +232,79 @@ export const Repository = () => {
         <section className='container my-10 mx-auto'>
           <div className='py-5 px-10 border border-gray-700 rounded-t-md bg-gray-800 bg-opacity-50 text-left text-lg uppercase'>how it's made</div>
           <div className='py-5 px-10 border border-gray-700 rounded-b-md'>
-            <div className='my-2 flex flex-col'>
-              {languages && createBarChart(languages)}
-            </div>
+            {languages &&
+              <div className='my-2 flex flex-col'>
+                {createBarChart(languages)}
+              </div>
+            }
+            {repo.fork && (
+              <div className='grid grid-cols-2 w-full'>
+                {repo.parent && (
+                  <div className='my-2 p-5 col-span-1 items-center border border-gray-500 rounded-md'>
+                    <div className='w-full'>
+                      <div className='py-2 px-10 bg-gray-500 bg-opacity-50 text-left text-lg text-center capitalize'>forked from</div>
+                    </div>
+                    <div className='w-full'>
+                      <div className='my-2'>
+                        <Link to={{ pathname: repo.parent.html_url}} target='_blank'>
+                          <p className='text-xl mb-5 underline'>{repo.parent.full_name}</p>
+                        </Link>
+                      </div>
+                      <div className='my-2'>
+                        <p>{repo.parent.description}</p>
+                        {repo.parent.homepage && (
+                          <Link to={{ pathname: repo.parent.homepage}} target='_blank'>
+                            <p className='underline'>{repo.parent.homepage}</p>
+                          </Link>
+                        )}
+                      </div>
+                      <div className="my-2">
+                        <span className="mr-2 p-2 rounded-full bg-black">
+                          {repo.parent.language || 'No specific language'}
+                        </span>
+                        <span className="mr-2"><StarIcon size={16} /> {repo.parent.stargazers_count || 0}</span>
+                        <span className="mr-2"><RepoForkedIcon size={16} /> {repo.parent.forks_count || 0}</span>
+                        <span className='mr-2'><EyeIcon size={16} /> {repo.parent.watchers_count || 0}</span>
+                        <span className="mr-2">Built by:</span>
+                        <img src={repo.parent.owner.avatar_url} alt='parent author avatar' className="w-10 h-10 rounded-full inline-block" />
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {repo.source && (repo.parent.id !== repo.source.id) && (
+                  <div className='my-2 p-5 col-span-1 items-center border border-gray-500 rounded-md'>
+                    <div className='w-full'>
+                      <div className='py-2 px-10 bg-gray-500 bg-opacity-50 text-left text-lg text-center capitalize'>original source</div>
+                    </div>
+                    <div className='w-full'>
+                      <div className='my-2'>
+                        <Link to={{ pathname: repo.source.html_url}} target='_blank'>
+                          <p className='text-xl mb-5 underline'>{repo.source.full_name}</p>
+                        </Link>
+                      </div>
+                      <div className='my-2'>
+                        <p>{repo.source.description}</p>
+                        {repo.source.homepage && (
+                          <Link to={{ pathname: repo.source.homepage}} target='_blank'>
+                            <p className='underline'>{repo.source.homepage}</p>
+                          </Link>
+                        )}
+                      </div>
+                      <div className="my-2">
+                        <span className="mr-2 p-2 rounded-full bg-black">
+                          {repo.source.language || 'No specific language'}
+                        </span>
+                        <span className="mr-2"><StarIcon size={16} /> {repo.source.stargazers_count || 0}</span>
+                        <span className="mr-2"><RepoForkedIcon size={16} /> {repo.source.forks_count || 0}</span>
+                        <span className='mr-2'><EyeIcon size={16} /> {repo.source.watchers_count || 0}</span>
+                        <span className="mr-2">Built by:</span>
+                        <img src={repo.source.owner.avatar_url} alt='parent author avatar' className="w-10 h-10 rounded-full inline-block" />
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </section>
         <section className='container my-10 mx-auto'>

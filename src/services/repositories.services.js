@@ -40,7 +40,7 @@ export const getRepository = (queries) => {
 export const getSecondaryRepositoryData = async (repository) => {
   const secondaryDataUrl = {
     owner: repository.owner.url,
-    organization: repository.organization.url,
+    organization: repository.organization && repository.organization.url,
     contributors: repository.contributors_url,
     subscribers: repository.subscribers_url,
     languages: repository.languages_url
@@ -49,11 +49,13 @@ export const getSecondaryRepositoryData = async (repository) => {
   const secondaryData = {};
   await Promise.all(
     Object.keys(secondaryDataUrl).map(async name =>
-      secondaryData[name] = await fetchJson(secondaryDataUrl[name], {
-        headers: {
-          Authorization: `token ${GITHUB_TOKEN}`
-        }
-      })
+      (secondaryDataUrl[name])
+        ? secondaryData[name] = await fetchJson(secondaryDataUrl[name], {
+            headers: {
+              Authorization: `token ${GITHUB_TOKEN}`
+            }
+          })
+        : null
     )
   );
       

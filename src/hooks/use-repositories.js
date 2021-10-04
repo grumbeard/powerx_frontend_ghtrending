@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
-import { getRepositories, getRepository } from "services/repositories.services";
+import { getRepositories, getRepository, getSecondaryRepositoryData } from "services/repositories.services";
 
 export const useRepositories = () => {
   const [period, setPeriod] = useState('daily');
@@ -24,9 +24,10 @@ export const useRepositories = () => {
 
 export const useRepository = (name, author) => {
   
-  const query = useQuery(['repository', name, author], () => getRepository({ name, author }));
+  const query = useQuery(['repository', name, author], async () => {
+    const repo = await getRepository({ name, author });
+    return await getSecondaryRepositoryData(repo);
+  });
   
-  return {
-    ...query,
-  };
+  return { ...query };
 };

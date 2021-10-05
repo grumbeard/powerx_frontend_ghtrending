@@ -1,8 +1,14 @@
 import cn from "classnames"
 
-export const Card = ({ children, ...props }) => {
+const classByColor = {
+  gray: 'border-gray-700',
+  red: 'border-red-900'
+};
+
+export const Card = ({ color='gray', children, ...props }) => {
   const className = cn(
-    'my-2 p-5 border border-gray-700 rounded-md',
+    'my-2 p-5 border rounded-md',
+    classByColor[color],
     props.className
   );
   

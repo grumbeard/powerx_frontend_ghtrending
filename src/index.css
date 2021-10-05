@@ -14,11 +14,12 @@ h3 {
 
 [data-tooltip]:before {  
   font-size: small;
-  position : absolute;
-   content : attr(data-tooltip);
-   opacity : 0;
+  position: absolute;
+  left: 1rem;
+  content: attr(data-tooltip);
+  opacity: 0;
 }
 
 [data-tooltip]:hover:before {        
-  opacity : 1;
+  opacity: 1;
 }

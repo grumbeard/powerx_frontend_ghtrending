@@ -1,8 +1,36 @@
+<<<<<<< HEAD
 import cn from "classnames";
 import { styleTextWithComments } from "lib/style-text-with-comments";
 import { ChevronDownIcon, ChevronUpIcon } from "@primer/octicons-react";
 import { Card } from "./card";
 
+=======
+import { ChevronDownIcon, ChevronUpIcon } from "@primer/octicons-react";
+import cn from "classnames";
+import { Card } from "./card";
+
+const styleComments = (string, commentClass='my-1 text-gray-500', textClass='my-1 text-gray-300') => {
+  const regex = new RegExp('(?<comment><!--[^<>]*-->)|(?<text>[^<>]+)', 'g');
+  const matches = string.matchAll(regex);
+  let content = [];
+  
+  for (const match of matches) {
+    const { comment, text } = match.groups;
+    if (comment) content.push(<p className={commentClass}>{comment}</p>);
+    if (text) {
+      const lines = text
+        .replace('\r\n', '\n')
+        .split('\n')
+        .map(line => (
+          <p className={textClass}>{line}</p>
+        ))
+      content.push(...lines)
+    }
+  }
+  return content;
+};
+
+>>>>>>> 5d1d89fea417f40bf6276d9ca798a713e1fcaa05
 export const IssueCard = ({ issue, isOpen, ...props }) => {
   const className = cn(
     'grid grid-cols-6 items-center',
@@ -28,7 +56,11 @@ export const IssueCard = ({ issue, isOpen, ...props }) => {
       </div>
       { isOpen &&
         <Card className='col-span-6'>
+<<<<<<< HEAD
           { styleTextWithComments(issue.body) }
+=======
+          { styleComments(issue.body) }
+>>>>>>> 5d1d89fea417f40bf6276d9ca798a713e1fcaa05
         </Card>
       }
     </Card>

@@ -49,7 +49,11 @@ export const getSecondaryRepositoryData = async (repository) => {
     subscribers: repository.subscribers_url,
     languages: repository.languages_url,
     issues: trimParams(repository.issues_url),
+<<<<<<< HEAD
     releases: trimParams(repository.releases_url)
+=======
+    // releases: trimParams(repository.releases_url)
+>>>>>>> 5d1d89fea417f40bf6276d9ca798a713e1fcaa05
   }
   
   const secondaryData = {};

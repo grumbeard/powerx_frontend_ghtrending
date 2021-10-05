@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useRepository } from 'hooks/use-repositories';
+<<<<<<< HEAD
 import { EyeIcon, RepoForkedIcon, RocketIcon, StarIcon } from '@primer/octicons-react';
 import { Badge } from 'components/badge';
 import { Button } from 'components/button';
@@ -10,6 +11,15 @@ import { Card, InfoCard, SectionCard } from 'components/card';
 import { IssueCard } from 'components/issue-card';
 import { EntityCard } from 'components/entity-card';
 import { styleTextWithComments } from 'lib/style-text-with-comments';
+=======
+import { EyeIcon, RepoForkedIcon, LogoGithubIcon, MentionIcon, StarIcon, LinkIcon, PeopleIcon } from '@primer/octicons-react';
+import { Badge } from 'components/badge';
+import { Button } from 'components/button';
+import { Bar } from 'components/bar';
+import { InfoCard, SectionCard } from 'components/card';
+import { IssueCard } from 'components/issue-card';
+import { EntityCard } from 'components/entity-card';
+>>>>>>> 5d1d89fea417f40bf6276d9ca798a713e1fcaa05
 
 const createBarChart = (dict) => {
   const total = Object.values(dict).reduce((a,b) => Number(a) + Number(b));
@@ -33,8 +43,12 @@ export const Repository = () => {
     contributors,
     subscribers,
     languages,
+<<<<<<< HEAD
     issues,
     releases
+=======
+    issues
+>>>>>>> 5d1d89fea417f40bf6276d9ca798a713e1fcaa05
   } = { ...data };
 
   return (
@@ -217,6 +231,7 @@ export const Repository = () => {
           </div>
         </SectionCard>
         <SectionCard title="where it's at">
+<<<<<<< HEAD
           {releases && (releases.length !== 0) && (
             <>
             <InfoCard title='releases'>
@@ -252,6 +267,20 @@ export const Repository = () => {
               </div>
             </InfoCard>
           )}
+=======
+          <div className='py-5 px-10 border border-gray-700 rounded-b-md'>
+            <div className='my-2 flex flex-col'>
+              {issues && issues.map(issue =>
+                <IssueCard
+                  key={issue.id}
+                  issue={issue}
+                  isOpen={openIssue === issue.id}
+                  onClick={() => setOpenIssue((openIssue === issue.id) ? null : issue.id)}
+                />
+              )}
+            </div>
+          </div>
+>>>>>>> 5d1d89fea417f40bf6276d9ca798a713e1fcaa05
         </SectionCard>
         </>
       )}

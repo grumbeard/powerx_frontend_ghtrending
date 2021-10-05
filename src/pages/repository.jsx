@@ -131,42 +131,14 @@ export const Repository = () => {
               )}
           </div>
         </SectionCard>
-        <SectionCard title='who likes it'>
-            <div className='grid grid-cols-2'>
-              {subscribers && (
-                <InfoCard className='col-span-1 items-center' title='subscribers'>
-                  <div className='grid grid-cols-6 py-2 px-10 gap-2'>
-                    { subscribers.map(subscriber => (
-                        <span className='col-span-1 mx-auto' key={subscriber.id}>
-                          <Link to={{ pathname: subscriber.html_url}} target='_blank'>
-                            <img
-                              src={subscriber.avatar_url}
-                              alt='subscriber avatar'
-                              className="w-10 h-10 rounded-full inline-block"
-                              title={subscriber.login}
-                            />
-                          </Link>
-                        </span>
-                      ))
-                    }
-                  </div>
-                </InfoCard>
-              )}
-              {!subscribers && (
-                <div className='mx-auto text-xl'>
-                  No subscribers yet
-                </div>
-              )}
-            </div>
-        </SectionCard>
         <SectionCard title="how it's made">
           <div className='py-5 px-10 border border-gray-700 rounded-b-md'>
-            {languages &&
+            {languages && (Object.keys(languages).length !== 0) &&
               <div className='my-2 flex flex-col'>
                 {createBarChart(languages)}
               </div>
             }
-            {!languages && (
+            {(!languages || (Object.keys(languages).length === 0)) && (
               <div className='mx-auto text-xl'>
                 Language information unavailable
               </div>
@@ -235,6 +207,34 @@ export const Repository = () => {
               </div>
             )}
           </div>
+        </SectionCard>
+        <SectionCard title='who likes it'>
+            <div className='grid grid-cols-2'>
+              {subscribers && (
+                <InfoCard className='col-span-1 items-center' title='subscribers'>
+                  <div className='grid grid-cols-6 py-2 px-10 gap-2'>
+                    { subscribers.map(subscriber => (
+                        <span className='col-span-1 mx-auto' key={subscriber.id}>
+                          <Link to={{ pathname: subscriber.html_url}} target='_blank'>
+                            <img
+                              src={subscriber.avatar_url}
+                              alt='subscriber avatar'
+                              className="w-10 h-10 rounded-full inline-block"
+                              title={subscriber.login}
+                            />
+                          </Link>
+                        </span>
+                      ))
+                    }
+                  </div>
+                </InfoCard>
+              )}
+              {!subscribers && (
+                <div className='mx-auto text-xl'>
+                  No subscribers yet
+                </div>
+              )}
+            </div>
         </SectionCard>
         <SectionCard title="where it's at">
           {releases && (releases.length !== 0) && (

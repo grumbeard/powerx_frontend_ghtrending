@@ -1,12 +1,14 @@
+import { useState } from 'react';
+import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
+import { useRepository } from 'hooks/use-repositories';
 import { EyeIcon, RepoForkedIcon, LogoGithubIcon, MentionIcon, StarIcon, LinkIcon, PeopleIcon } from '@primer/octicons-react';
 import { Badge } from 'components/badge';
 import { Button } from 'components/button';
 import { Bar } from 'components/bar';
-import { useRepository } from 'hooks/use-repositories';
-import { useState } from 'react';
-import { useParams } from 'react-router';
-import { Link } from 'react-router-dom';
 import { InfoCard, SectionCard } from 'components/card';
+import { IssueCard } from 'components/issue-card';
+import { EntityCard } from 'components/entity-card';
 
 const createBarChart = (dict) => {
   const total = Object.values(dict).reduce((a,b) => Number(a) + Number(b));
@@ -19,6 +21,7 @@ export const Repository = () => {
   
   const { name: repoName, author: repoAuthor } = useParams();
   const [cloneSSH, setCloneSSH] = useState(true);
+  const [openIssue, setOpenIssue] = useState(null);
   
   const { data, status } = useRepository(repoName, repoAuthor);
   
@@ -28,7 +31,8 @@ export const Repository = () => {
     organization: org,
     contributors,
     subscribers,
-    languages
+    languages,
+    issues
   } = { ...data };
 
   return (
@@ -91,85 +95,16 @@ export const Repository = () => {
         </SectionCard>
         <SectionCard title='who made it'>
           <div className='grid grid-cols-2'>
-            <InfoCard className='col-span-1' title='owner'>
-              <div className='grid grid-cols-3'>
-                <div className='col-span-1'>
-                  <img
-                    src={repo.owner.avatar_url}
-                    alt='author avatar'
-                    className="object-contain rounded-full inline-block"
-                    title={owner.name || repo.owner.login}
-                  />
-                </div>
-                <div className='col-span-2'>
-                  <div className='py-2 px-10'>
-                    <div className='underline'>
-                      <Link to={{ pathname: repo.owner.html_url}} target='_blank'>
-                        <LogoGithubIcon size={16} className='mr-2' />{repo.owner.login}
-                      </Link>
-                    </div>
-                    {owner.blog && (
-                      <div>
-                        <LinkIcon size={16} className='mr-2' />
-                        <Link to={{ pathname: owner.blog}} target='_blank'>
-                          {owner.blog}
-                        </Link>
-                      </div>
-                    )}
-                    {owner.twitter_username && (
-                      <div>
-                        <MentionIcon size={16} className='mr-2' />
-                        <Link to={{ pathname: owner.twitter_username}} target='_blank'>
-                          {owner.twitter_username} (Twitter)
-                        </Link>
-                      </div>
-                    )}
-                    {owner && (owner.followers >= 0) && (
-                      <div className='underline'>
-                        <PeopleIcon size={16} className='mr-2' />
-                        <Link to={{ pathname: owner.followers_url}} target='_blank'>
-                          {owner.followers}
-                        </Link>
-                      </div>
-                    )}
-                    {owner.bio && (
-                      <div className='p-2'>
-                        <div className='underline capitalize'>bio</div>
-                        <div className='text-center'>{owner.bio}</div>
-                      </div>
-                    )}
-                    <div className='py-4'>
-                      Repository created by {owner.name || repo.owner.login} in {new Date(repo.created_at).getFullYear()}.
-                    </div>
-                  </div>
-                </div>
+            <EntityCard className='col-span-1 items-center' title='owner' entity={owner}>
+              <div className='py-4'>
+                Repository created by {owner.name || repo.owner.login} in {new Date(repo.created_at).getFullYear()}.
               </div>
-            </InfoCard>
+            </EntityCard>
             {repo.organization && (repo.owner.type !== 'Organization') && (
-              <InfoCard className='col-span-1' title='organization'>
-                <div className='grid grid-cols-3'>
-                  <div className='col-span-1'>
-                    <img
-                      src={repo.organization.avatar_url}
-                      alt='author avatar'
-                      className="object-contain rounded-full inline-block"
-                      title={org.name || repo.organization.login}  
-                    />
-                  </div>
-                  <div className='col-span-2'>
-                  <div className='py-2 px-10'>
-                    <span className='underline'>
-                      <Link to={{ pathname: repo.organization.html_url}} target='_blank'>
-                        @{repo.organization.login}
-                      </Link>
-                    </span>
-                  </div>
-                </div>
-                </div>
-              </InfoCard>
+              <EntityCard className='col-span-1 items-center' title='organization' entity={org} />
             )}
             {contributors && (
-              <InfoCard className='col-span-1' title='contributors'>
+              <InfoCard className='col-span-1 items-center' title='contributors'>
                 <div className='grid grid-cols-6 py-2 px-10 gap-2'>
                   { contributors.map(contributor => (
                       <span className='col-span-1 mx-auto' key={contributor.id}>
@@ -192,7 +127,7 @@ export const Repository = () => {
         <SectionCard title='who likes it'>
             <div className='grid grid-cols-2'>
               {subscribers && (
-                <InfoCard className='col-span-1' title='subscribers'>
+                <InfoCard className='col-span-1 items-center' title='subscribers'>
                   <div className='grid grid-cols-6 py-2 px-10 gap-2'>
                     { subscribers.map(subscriber => (
                         <span className='col-span-1 mx-auto' key={subscriber.id}>
@@ -222,7 +157,7 @@ export const Repository = () => {
             {repo.fork && (
               <div className='grid grid-cols-2 w-full'>
                 {repo.parent && (
-                  <InfoCard className='col-span-1' title='forked from'>
+                  <InfoCard className='col-span-1 items-center' title='forked from'>
                     <div className='my-2'>
                       <Link to={{ pathname: repo.parent.html_url}} target='_blank'>
                         <p className='text-xl mb-5 underline'>{repo.parent.full_name}</p>
@@ -249,7 +184,7 @@ export const Repository = () => {
                   </InfoCard>
                 )}
                 {repo.source && (repo.parent.id !== repo.source.id) && (
-                  <InfoCard className='col-span-1' title='original source'>
+                  <InfoCard className='col-span-1 items-center' title='original source'>
                     <div className='my-2'>
                       <Link to={{ pathname: repo.source.html_url}} target='_blank'>
                         <p className='text-xl mb-5 underline'>{repo.source.full_name}</p>
@@ -281,7 +216,16 @@ export const Repository = () => {
         </SectionCard>
         <SectionCard title="where it's at">
           <div className='py-5 px-10 border border-gray-700 rounded-b-md'>
-            <div className='my-2 flex'></div>
+            <div className='my-2 flex flex-col'>
+              {issues && issues.map(issue =>
+                <IssueCard
+                  key={issue.id}
+                  issue={issue}
+                  isOpen={openIssue === issue.id}
+                  onClick={() => setOpenIssue((openIssue === issue.id) ? null : issue.id)}
+                />
+              )}
+            </div>
           </div>
         </SectionCard>
         </>

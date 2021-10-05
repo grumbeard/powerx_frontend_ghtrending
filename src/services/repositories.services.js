@@ -3,6 +3,10 @@ import { fetchJson } from "lib/fetch-json";
 
 const GITHUB_TOKEN = process.env.REACT_APP_CLIENT_TOKEN;
 
+function trimParams(url) {
+  return url.match(/^(.*:\/\/)?(\w*\.*\/*-*)*/)[0];
+}
+
 export const getRepositories = (queries) => {
   let url = `${TRENDING_API_BASE}/github/repositories`;
   let queryString = ''
@@ -43,7 +47,9 @@ export const getSecondaryRepositoryData = async (repository) => {
     organization: repository.organization && repository.organization.url,
     contributors: repository.contributors_url,
     subscribers: repository.subscribers_url,
-    languages: repository.languages_url
+    languages: repository.languages_url,
+    issues: trimParams(repository.issues_url),
+    // releases: trimParams(repository.releases_url)
   }
   
   const secondaryData = {};

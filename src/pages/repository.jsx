@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useRepository } from 'hooks/use-repositories';
-import { EyeIcon, RepoForkedIcon, LogoGithubIcon, MentionIcon, StarIcon, LinkIcon, PeopleIcon } from '@primer/octicons-react';
+import { EyeIcon, RepoForkedIcon, RocketIcon, StarIcon } from '@primer/octicons-react';
 import { Badge } from 'components/badge';
 import { Button } from 'components/button';
 import { Bar } from 'components/bar';
-import { InfoCard, SectionCard } from 'components/card';
+import { Card, InfoCard, SectionCard } from 'components/card';
 import { IssueCard } from 'components/issue-card';
 import { EntityCard } from 'components/entity-card';
+import { styleTextWithComments } from 'lib/style-text-with-comments';
 
 const createBarChart = (dict) => {
   const total = Object.values(dict).reduce((a,b) => Number(a) + Number(b));
@@ -32,7 +33,8 @@ export const Repository = () => {
     contributors,
     subscribers,
     languages,
-    issues
+    issues,
+    releases
   } = { ...data };
 
   return (
@@ -215,18 +217,41 @@ export const Repository = () => {
           </div>
         </SectionCard>
         <SectionCard title="where it's at">
-          <div className='py-5 px-10 border border-gray-700 rounded-b-md'>
-            <div className='my-2 flex flex-col'>
-              {issues && issues.map(issue =>
-                <IssueCard
-                  key={issue.id}
-                  issue={issue}
-                  isOpen={openIssue === issue.id}
-                  onClick={() => setOpenIssue((openIssue === issue.id) ? null : issue.id)}
-                />
-              )}
-            </div>
-          </div>
+          {releases && (releases.length !== 0) && (
+            <>
+            <InfoCard title='releases'>
+              <Link to={{ pathname: releases[0].html_url }} target='_blank'>
+                <div className='my-2 flex items-center'>
+                  <RocketIcon size={24} className='m-4' />
+                  <span className='text-xl mr-2'>Latest:</span>
+                  <span className='text-xl underline'>{releases[0].name}</span>
+                </div>
+              </Link>
+              <span className='m-4 text-sm'>Published:</span>
+              <span className='text-sm'>{new Date(releases[0].published_at).toLocaleDateString()}</span>
+            </InfoCard>
+            {releases[0].prerelease && <Badge color='gray'>prerelease</Badge>}
+            {releases[0].body && (
+              <Card>
+                {styleTextWithComments(releases[0].body)}
+              </Card>
+            )}
+            </>
+          )}
+          {issues && (issues.length !== 0) && (
+            <InfoCard title='issues'>
+              <div className='my-2 flex flex-col'>
+                {issues.map(issue =>
+                  <IssueCard
+                    key={issue.id}
+                    issue={issue}
+                    isOpen={openIssue === issue.id}
+                    onClick={() => setOpenIssue((openIssue === issue.id) ? null : issue.id)}
+                  />
+                )}
+              </div>
+            </InfoCard>
+          )}
         </SectionCard>
         </>
       )}

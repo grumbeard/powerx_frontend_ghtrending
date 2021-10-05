@@ -1,5 +1,6 @@
 import { RepoForkedIcon, StarIcon } from "@primer/octicons-react";
 import { Link } from "react-router-dom";
+import { Card } from "./card";
 
 export const RepositoryCard = ({ repository }) => {
   const {
@@ -15,8 +16,8 @@ export const RepositoryCard = ({ repository }) => {
   } = repository;
   return (
     <Link to={`/${author}/${name}`}>
-      <div
-        className="m-2 py-5 px-10 border border-gray-700 rounded-md"
+      <Card
+        className="m-2 py-5 px-10"
       >
         <section className="my-2">
           <h1>{author} / {name}</h1>
@@ -40,7 +41,7 @@ export const RepositoryCard = ({ repository }) => {
           <span className="mr-2">Built by:</span>
           <img src={avatar} alt='author avatar' className="w-10 h-10 rounded-full inline-block" />
         </section>
-      </div>
+      </Card>
     </Link>
   );
 }

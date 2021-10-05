@@ -11,3 +11,14 @@ h2 {
 h3 {
   @apply text-lg;
 }
+
+[data-tooltip]:before {  
+  font-size: small;
+  position : absolute;
+   content : attr(data-tooltip);
+   opacity : 0;
+}
+
+[data-tooltip]:hover:before {        
+  opacity : 1;
+}

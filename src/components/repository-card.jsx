@@ -56,7 +56,7 @@ export const RepositoryCard = (props) => {
             <img src={avatar} alt='author avatar' className="w-10 h-10 rounded-full inline-block" />
           </section>
         </div>
-        <div className='col-span-1 flex flex-col items-center justify-between'>
+        <div className='col-span-1 flex flex-row md:flex-col items-center justify-between'>
           <div className='flex'>
             {isBookmarked
               ? <span onClick={handleRemoveBookmark} className='mx-2 p-2 hover:bg-gray-700 rounded-full flex place-content-center'>

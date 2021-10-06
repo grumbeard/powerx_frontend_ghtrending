@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { LogoGithubIcon, MentionIcon, LinkIcon, PeopleIcon } from '@primer/octicons-react';
-import { InfoCard } from './card';
+import { InfoCard } from '../presentation/info-card';
 
 export const EntityCard = ({ entity, children, ...props }) => {
 
@@ -48,7 +48,7 @@ export const EntityCard = ({ entity, children, ...props }) => {
           {entity.bio && (
             <div className='py-2'>
               <div className='underline capitalize'>bio</div>
-              <div className='text-center'>{entity.bio}</div>
+              <div className='italic'>{entity.bio}</div>
             </div>
           )}
           {children}

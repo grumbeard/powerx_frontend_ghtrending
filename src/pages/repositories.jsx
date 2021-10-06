@@ -1,9 +1,9 @@
-import { RepositoryCard } from 'components/repository-card';
+import { RepositoryCard } from 'components/domain/repository-card';
 import { useRepositories } from 'hooks/use-repositories';
 import { useLanguages } from 'hooks/use-languages';
 import { useSpokenLanguages } from 'hooks/use-spoken-languages';
 import { useBookmarks } from 'hooks/use-bookmarks';
-import { Card } from 'components/card';
+import { Card } from 'components/presentation/card';
 import { ThreeBarsIcon, XIcon, HeartFillIcon } from '@primer/octicons-react';
 import { Link } from 'react-router-dom';
 import { useRef, useState } from 'react';
@@ -78,6 +78,7 @@ export const Repositories = () => {
       <p>See what the GitHub community is most excited about { DATE_RANGE[period] }</p>
     </header>
     <main className='grid grid-cols-6 relative'>
+      {/* Bookmarks Side Bar */}
       <section className='w-4/5 lg:w-full mx-auto py-10 px-2 col-span-6 lg:col-span-1 bg-black hidden' ref={sideBarRef}>
         {bookmarks && (bookmarks.length !== 0) && bookmarks.map(bookmark => 
           <Card key={`${bookmark.author}-${bookmark.name}`} className='relative'>
@@ -102,6 +103,7 @@ export const Repositories = () => {
           </div>
         )}
       </section>
+      {/* Main Content Area */}
       <section className='col-span-6' ref={mainContentRef}>
         <div className='w-4/5 mx-auto mt-10 flex flex-col lg:flex-row justify-end items-center border border-gray-400 rounded-t-md bg-gray-800 bg-opacity-50'>
           {/* Spoken Language Selector */}
@@ -184,6 +186,7 @@ export const Repositories = () => {
           }
         </div>
       </section>
+      {/* Side Bar Toggle */}
       <div onClick={toggleSideBar} className='absolute left-2 top-2 flex items-center'>
         <span className='mr-2'>
           {isSideBarExpanded

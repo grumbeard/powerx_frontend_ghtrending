@@ -1,8 +1,8 @@
 import cn from "classnames";
 import { styleTextWithComments } from "lib/style-text-with-comments";
 import { ChevronDownIcon, ChevronUpIcon } from "@primer/octicons-react";
-import { Card } from "./card";
-import { Badge } from "./badge";
+import { Card } from "../presentation/card";
+import { Badge } from "../presentation/badge";
 
 export const IssueCard = ({ issue, isOpen, ...props }) => {
   const className = cn(

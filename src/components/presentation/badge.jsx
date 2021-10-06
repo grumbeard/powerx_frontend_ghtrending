@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { PropTypes } from 'prop-types';
 
 const classByColor = {
   gray: "bg-gray-100 text-gray-800",
@@ -8,14 +9,18 @@ const classByColor = {
   'white-outline': "border border-white text-white"
 }
 
-
 export const Badge = ({color, ...props}) => {
   const className = classNames(
-    "inline-flex items-center px-2.5 py-0.5 mr-2 rounded-full text-xs font-medium",
+    "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium",
     color && classByColor[color],
     props.className
   );
   return(
     <span {...props} className={className} />
   );
+};
+
+Badge.propTypes = {
+  color: PropTypes.string,
+  className: PropTypes.string
 };

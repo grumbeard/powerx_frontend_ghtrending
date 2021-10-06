@@ -1,4 +1,10 @@
-export const styleTextWithComments = (string, commentClass='my-2 text-gray-500', textClass='my-2 text-gray-300') => {
+export const styleTextWithComments = (
+  string,
+  commentClass='my-2 text-gray-500',
+  textClass='my-2 text-gray-300'
+  ) => {
+  if (!string) return ['-- No details provided --'];
+    
   const regex = new RegExp('(?<comment><!--[^<>]*-->)|(?<text>[^<>]+)', 'g');
   const matches = string.matchAll(regex);
   let content = [];

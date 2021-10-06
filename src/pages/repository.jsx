@@ -3,18 +3,20 @@ import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useRepository } from 'hooks/use-repositories';
 import { EyeIcon, RepoForkedIcon, RocketIcon, StarIcon } from '@primer/octicons-react';
-import { Badge } from 'components/badge';
-import { Button } from 'components/button';
-import { Bar } from 'components/bar';
-import { Card, InfoCard, SectionCard } from 'components/card';
-import { IssueCard } from 'components/issue-card';
-import { EntityCard } from 'components/entity-card';
+import { Badge } from 'components/presentation/badge';
+import { Button } from 'components/presentation/button';
+import { Bar } from 'components/presentation/bar';
+import { Card } from 'components/presentation/card';
+import { InfoCard } from 'components/presentation/info-card';
+import { SectionCard } from 'components/presentation/section-card';
+import { IssueCard } from 'components/domain/issue-card';
+import { EntityCard } from 'components/domain/entity-card';
 import { styleTextWithComments } from 'lib/style-text-with-comments';
 
 const createBarChart = (dict) => {
   const total = Object.values(dict).reduce((a,b) => Number(a) + Number(b));
   return Object.keys(dict).map(key => 
-    <Bar key={key} label={key} value={Number(dict[key])} total={total} />
+    <Bar key={key} label={key} value={Number(dict[key])} total={total} hoverInfo={`${dict[key]} lines of code`} />
   );
 };
 
@@ -44,6 +46,7 @@ export const Repository = () => {
       </header>
       {repo && (
         <>
+        {/* Repository Summary */}
         <SectionCard>
             <div className='my-2 flex'>
               <div className='flex-grow'>
@@ -61,14 +64,14 @@ export const Repository = () => {
                   )}
                 </div>
                 <div className='my-2'>
-                  {repo.archived && <Badge color='gray'>archived</Badge>}
+                  {repo.archived && <Badge color='gray' className='mr-2'>archived</Badge>}
                   {repo.allow_forking
-                    ? <Badge color='green'>forkable</Badge>
-                    : <Badge color='gray'>not forkable</Badge>
+                    ? <Badge color='green' className='mr-2'>forkable</Badge>
+                    : <Badge color='gray' className='mr-2'>not forkable</Badge>
                   }
-                  {(repo.open_issues_count === 0) && <Badge color='green'>zero open issues</Badge>}
-                  {repo.fork && <Badge color='yellow'>forked project</Badge>}
-                  {repo.license && <Badge color='white-outline'>{repo.license.name}</Badge>}
+                  {(repo.open_issues_count === 0) && <Badge color='green' className='mr-2'>zero open issues</Badge>}
+                  {repo.fork && <Badge color='yellow' className='mr-2'>forked project</Badge>}
+                  {repo.license && <Badge color='white-outline' className='mr-2'>{repo.license.name}</Badge>}
                 </div>
               </div>
               <div className='grid grid-cols-3 my-2 h-24'>
@@ -95,6 +98,7 @@ export const Repository = () => {
               </Button>
             </div>
         </SectionCard>
+        {/* Repository Details */}
         <SectionCard title='who made it'>
           <div className='grid grid-cols-2'>
             <EntityCard className='col-span-1 items-center' title='owner' entity={owner}>

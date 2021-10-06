@@ -1,7 +1,7 @@
 import { HeartFillIcon, HeartIcon, MarkGithubIcon, RepoForkedIcon, StarIcon } from "@primer/octicons-react";
 import { Link } from "react-router-dom";
-import { Button } from "./button";
-import { Card } from "./card";
+import { Button } from "../presentation/button";
+import { Card } from "../presentation/card";
 
 export const RepositoryCard = (props) => {
   const {

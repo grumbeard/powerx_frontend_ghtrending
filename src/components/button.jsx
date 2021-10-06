@@ -2,7 +2,8 @@ import classNames from "classnames";
 
 const classByColor = {
   gray: "bg-gray-100 text-gray-800",
-  green: "bg-green-100 text-green-800"
+  green: "bg-green-100 text-green-800",
+  'white-outline': "border border-white text-white"
 }
 
 

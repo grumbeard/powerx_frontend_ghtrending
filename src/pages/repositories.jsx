@@ -2,6 +2,7 @@ import { RepositoryCard } from 'components/repository-card';
 import { useRepositories } from 'hooks/use-repositories';
 import { useLanguages } from 'hooks/use-languages';
 import { useSpokenLanguages } from 'hooks/use-spoken-languages';
+import { useBookmarks } from 'hooks/use-bookmarks';
 
 function filterDuplicates(data) {
   return [...new Set(data)];
@@ -19,6 +20,8 @@ export const Repositories = () => {
     setSpokenLanguage
   } = useRepositories();
   
+  const { bookmarks, setBookmarks } = useBookmarks();
+  
   const {
     data: languages
   } = useLanguages();
@@ -33,11 +36,39 @@ export const Repositories = () => {
     monthly: 'this month'
   };
   
+  const isBookmarked = (repo) => {
+    const index = bookmarks.findIndex(bookmark =>
+      (bookmark.id && repo.id && (bookmark.id === repo.id))
+        || ((bookmark.author === repo.author) && (bookmark.name === repo.name))
+    );
+    return index >= 0;
+  };
+  
+  const handleAddBookmark = (repo) => {
+    if (!isBookmarked(repo)) setBookmarks(prevBookmarks => prevBookmarks.concat([repo]));
+  };
+  
+  const handleRemoveBookmark = (repo) => {
+    setBookmarks(prevBookmarks =>
+      prevBookmarks.filter(bookmark =>
+        (bookmark.id && repo.id && (bookmark.id !== repo.id))
+          || ((bookmark.author !== repo.author) && (bookmark.name !== repo.name))
+      )
+    );
+  };
+  
   return (
     <>
     <header className='py-10 text-center bg-gray-800'>
       <h1>Trending</h1>
       <p>See what the GitHub community is most excited about { DATE_RANGE[period] }</p>
+      {bookmarks && (bookmarks.length !== 0) && bookmarks.map(bookmark => 
+        <div key={`${bookmark.author}-${bookmark.name}`}>
+          <span>{bookmark.id}</span>
+          <span>{bookmark.author}</span>
+          <span>{bookmark.name}</span>
+        </div>
+      )}
     </header>
     <div className='md:w-3/5 mx-auto mt-10 flex border border-gray-400 rounded-t-md justify-end items-center bg-gray-800 bg-opacity-50'>
       {/* Spoken Language Selector */}
@@ -94,7 +125,13 @@ export const Repositories = () => {
         repositories && (
           repositories.length > 0 
             ? repositories.map(repo => (
-                <RepositoryCard key={repo.url} repository={repo} />
+                <RepositoryCard
+                  key={repo.url}
+                  repository={repo}
+                  addBookmark={handleAddBookmark}
+                  removeBookmark={handleRemoveBookmark}
+                  isBookmarked={isBookmarked(repo)}
+                />
               ))
             : <div className='m-10 text-center'><h1>No repositories trending for these filters...</h1></div>
         )

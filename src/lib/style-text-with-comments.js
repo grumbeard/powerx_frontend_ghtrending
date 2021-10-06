@@ -1,9 +1,14 @@
 export const styleTextWithComments = (
-  string,
-  commentClass='my-2 text-gray-500',
-  textClass='my-2 text-gray-300'
+    string,
+    styles = {
+      commentClass: 'my-2 text-gray-500',
+      textClass: 'my-2 text-gray-300'
+    }
   ) => {
   if (!string) return ['-- No details provided --'];
+  
+  const commentClass = styles.commentClass;
+  const textClass = styles.textClass;
     
   const regex = new RegExp('(?<comment><!--[^<>]*-->)|(?<text>[^<>]+)', 'g');
   const matches = string.matchAll(regex);
@@ -16,8 +21,8 @@ export const styleTextWithComments = (
       const lines = text
         .replace('\r\n', '\n')
         .split('\n')
-        .map(line => (
-          <p className={textClass}>{line}</p>
+        .map((line, index) => (
+          <p key={`${line}-${index}`} className={textClass}>{line}</p>
         ))
       content.push(...lines)
     }

@@ -27,7 +27,7 @@ export const InfoCard = ({ title, children, color, ...props }) => {
           </div>
         </div>
       )}
-      <div className='w-full'>
+      <div className='w-full py-2 px-10'>
         { children }
       </div>
     </Card>

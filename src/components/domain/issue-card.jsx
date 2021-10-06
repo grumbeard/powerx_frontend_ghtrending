@@ -4,7 +4,7 @@ import { ChevronDownIcon, ChevronUpIcon } from "@primer/octicons-react";
 import { Card } from "../presentation/card";
 import { Badge } from "../presentation/badge";
 
-export const IssueCard = ({ issue, isOpen, ...props }) => {
+export const IssueCard = ({ issue, isOpen=true, commentClass, textClass, ...props }) => {
   const className = cn(
     'grid grid-cols-6 items-center',
     props.className
@@ -19,13 +19,13 @@ export const IssueCard = ({ issue, isOpen, ...props }) => {
       <div className='md:col-span-4 flex justify-between'>
         <span>{issue.title}</span>
         {(issue.state === 'open') && 
-          <Badge color='red' className='mx-4'>{issue.state}</Badge>
+          <Badge color='red' className='mx-4 self-center'>{issue.state}</Badge>
         }
         {(issue.state === 'closed') && 
-          <Badge color='green' className='mx-4'>{issue.state}</Badge>
+          <Badge color='green' className='mx-4 self-center'>{issue.state}</Badge>
         }
         {(issue.state !== 'open') && (issue.state !== 'closed') &&
-          <Badge color='yellow' className='mx-4'>{issue.state}</Badge>
+          <Badge color='yellow' className='mx-4 self-center'>{issue.state}</Badge>
         }
       </div>
       <div className='md:col-span-1 justify-self-end'>
@@ -38,7 +38,7 @@ export const IssueCard = ({ issue, isOpen, ...props }) => {
       </div>
       { isOpen &&
         <Card className='col-span-6'>
-          { styleTextWithComments(issue.body) }
+          { styleTextWithComments(issue.body, { commentClass: commentClass || 'my-2 text-gray-500', textClass: textClass || 'my-2 text-gray-300' }) }
         </Card>
       }
     </Card>

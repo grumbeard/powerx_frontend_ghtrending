@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom';
 import { LogoGithubIcon, MentionIcon, LinkIcon, PeopleIcon } from '@primer/octicons-react';
 import { InfoCard } from '../presentation/info-card';
 
-export const EntityCard = ({ entity, children, ...props }) => {
+export const EntityCard = ({ entity, children, color, ...props }) => {
 
   return(
-    <InfoCard {...props}>
+    <InfoCard color={color} {...props}>
       <div className='grid grid-cols-3 items-center'>
         <div className='col-span-1 mx-auto'>
           <img

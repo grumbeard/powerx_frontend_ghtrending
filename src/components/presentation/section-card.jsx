@@ -18,7 +18,7 @@ export const SectionCard = ({ title, children, ...props }) => {
         <div className='py-5 px-10 border border-gray-700 rounded-t-md bg-gray-800 bg-opacity-50 text-left text-lg uppercase'>{title}</div>
       )}
       <div className={bodyClassName}>
-        <div className='w-full'>
+        <div className='w-full p-2'>
           {children}
         </div>
       </div>

@@ -160,7 +160,7 @@ export const Repositories = () => {
             </select>
           </div>
         </div>
-        <div className='w-4/5 mx-auto mb-10 flex flex-col border border-gray-400 rounded-b-md items-stretch'>
+        <div className='w-4/5 mx-auto mb-10 p-5 flex flex-col border border-gray-400 rounded-b-md items-stretch'>
           {/* Results */}
           {
             repositories && (
@@ -179,8 +179,8 @@ export const Repositories = () => {
           }
           {
             (repositoriesStatus !== 'success') && (
-              <div className='m-10 text-center'>
-                <h1>Loading...</h1>
+              <div className='text-center text-4xl m-10'>
+                <p>Loading...</p>
               </div>
             )
           }

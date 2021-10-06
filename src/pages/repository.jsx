@@ -286,7 +286,9 @@ export const Repository = () => {
       )}
       {
         (status !== 'success') && (
-          <div><h1>Loading...</h1></div>
+          <div className='text-center text-4xl m-10'>
+            <p>Loading...</p>
+          </div>
         )
       }
     </>

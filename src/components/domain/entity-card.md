@@ -2,11 +2,9 @@ EntityCard is a compound component utilizing `InfoCard`. It displays various det
 
 An `avatar_url` for the `entity` is required and it is displayed in the 'left' section. Any other entity details supplied are displayed in the 'right' section.
 
-All constraints for `InfoCard` apply.
+EntityCard variants are determined by an optional `color` property supplied. The default value of `color` is 'gray'. All constraints for `InfoCard` apply.
 
-EntityCard variants include 'Outline EntityCards' and are determined by an optional `color` property supplied. The default value of `color` is 'gray'.
 
-### Outline EntityCards
 ```jsx
 import { BrowserRouter } from 'react-router-dom';
 <BrowserRouter>

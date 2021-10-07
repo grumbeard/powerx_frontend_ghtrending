@@ -2,6 +2,7 @@ import { HeartFillIcon, HeartIcon, MarkGithubIcon, RepoForkedIcon, StarIcon } fr
 import { Link } from "react-router-dom";
 import { Button } from "../presentation/button";
 import { Card } from "../presentation/card";
+import { PropTypes } from 'prop-types';
 
 export const RepositoryCard = (props) => {
   const {
@@ -50,8 +51,8 @@ export const RepositoryCard = (props) => {
             >
               {language || 'No specific language'}
             </span>
-            <span className="mr-2"><StarIcon size={16} /> {stars}</span>
-            <span className="mr-2"><RepoForkedIcon size={16} /> {forks}</span>
+            <span className="mr-2"><StarIcon size={16} /> {stars || 0}</span>
+            <span className="mr-2"><RepoForkedIcon size={16} /> {forks || 0}</span>
             <span className="mr-2">Built by:</span>
             <img src={avatar} alt='author avatar' className="w-10 h-10 rounded-full inline-block" />
           </section>
@@ -77,4 +78,25 @@ export const RepositoryCard = (props) => {
       </div>
     </Card>
   );
+};
+
+RepositoryCard.propTypes = {
+    repository: PropTypes.shape({
+      id: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number
+      ]).isRequired,
+      author: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      language: PropTypes.string,
+      langColor: PropTypes.string,
+      description: PropTypes.string,
+      url: PropTypes.string.isRequired,
+      stars: PropTypes.number,
+      forks: PropTypes.number,
+      avatar: PropTypes.string.isRequired
+    }).isRequired,
+    isBookmarked: PropTypes.bool.isRequired,
+    addBookmark: PropTypes.func.isRequired,
+    removeBookmark: PropTypes.func.isRequired
 }

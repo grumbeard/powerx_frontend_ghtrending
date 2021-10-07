@@ -5,7 +5,6 @@ export const styleTextWithComments = (
       textClass: 'my-2 text-gray-300'
     }
   ) => {
-  if (!string) return ['-- No details provided --'];
   
   const commentClass = styles.commentClass;
   const textClass = styles.textClass;

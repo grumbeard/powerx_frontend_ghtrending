@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 import { LogoGithubIcon, MentionIcon, LinkIcon, PeopleIcon } from '@primer/octicons-react';
 import { InfoCard } from '../presentation/info-card';
+import { PropTypes } from 'prop-types';
 
-export const EntityCard = ({ entity, children, color, ...props }) => {
+export const EntityCard = ({ entity, title, children, color, ...props }) => {
 
   return(
-    <InfoCard color={color} {...props}>
+    <InfoCard title={title} color={color} {...props}>
       <div className='grid grid-cols-3 items-center'>
         <div className='col-span-1 mx-auto'>
           <img
@@ -37,7 +38,7 @@ export const EntityCard = ({ entity, children, color, ...props }) => {
               </Link>
             </div>
           )}
-          {entity && (entity.followers >= 0) && (
+          {(entity.followers >= 0) && (
             <div className='underline'>
               <PeopleIcon size={16} className='mr-2' />
               <Link to={{ pathname: entity.followers_url}} target='_blank'>
@@ -56,4 +57,20 @@ export const EntityCard = ({ entity, children, color, ...props }) => {
       </div>
     </InfoCard>
   );
-}
+};
+
+EntityCard.propTypes = {
+  entity: PropTypes.shape({
+    name: PropTypes.string,
+    login: PropTypes.string.isRequired,
+    avatar_url: PropTypes.string.isRequired,
+    bio: PropTypes.string,
+    blog: PropTypes.string,
+    html_url: PropTypes.string.isRequired,
+    twitter_username: PropTypes.string,
+    followers: PropTypes.number,
+    followers_url: PropTypes.string
+  }).isRequired,
+  title: PropTypes.string.isRequired,
+  color: PropTypes.oneOf(['gray', 'red'])
+};

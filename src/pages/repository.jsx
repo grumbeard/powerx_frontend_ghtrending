@@ -48,8 +48,8 @@ export const Repository = () => {
         <>
         {/* Repository Summary */}
         <SectionCard>
-            <div className='my-2 flex'>
-              <div className='flex-grow'>
+            <div className='my-2 grid grid-cols-6'>
+              <div className='col-span-4'>
                 <div className='my-2'>
                   <Link to={{ pathname: repo.html_url}} target='_blank'>
                     <p className='text-4xl mb-5 underline'>{repo.full_name}</p>
@@ -74,10 +74,19 @@ export const Repository = () => {
                   {repo.license && <Badge color='white-outline' className='mr-2'>{repo.license.name}</Badge>}
                 </div>
               </div>
-              <div className='grid grid-cols-3 my-2 h-24'>
-                <div className='px-4 my-4 w-32 flex items-center justify-around border rounded-l-md'><StarIcon size={32} /> {repo.stargazers_count || 0}</div>
-                <div className='px-4 my-4 w-32 flex items-center justify-around border'><RepoForkedIcon size={32} /> {repo.forks_count || 0}</div>
-                <div className='px-4 my-4 w-32 flex items-center justify-around border rounded-r-md'><EyeIcon size={32} /> {repo.watchers_count || 0}</div>
+              <div className='col-span-2 grid grid-cols-3 justify-end my-2 h-16'>
+                <div className='p-4 flex justify-center items-center border rounded-l-md'>
+                  <span className='mr-2'><StarIcon size={32} /></span>
+                  <span className='text-xl'>{repo.stargazers_count || 0}</span>
+                </div>
+                <div className='p-4 flex justify-center items-center border'>
+                  <span className='mr-2'><RepoForkedIcon size={32} /></span>
+                  <span className='text-xl'>{repo.forks_count || 0}</span>
+                </div>
+                <div className='p-4 flex justify-center items-center border rounded-r-md'>
+                  <span className='mr-2'><EyeIcon size={32} /></span>
+                  <span className='text-xl'>{repo.watchers_count || 0}</span>
+                </div>
               </div>
             </div>
             <div className='my-2 flex items-center'>
@@ -213,8 +222,8 @@ export const Repository = () => {
           </div>
         </SectionCard>
         <SectionCard title='who likes it'>
-            <div className='grid grid-cols-2'>
-              {subscribers && (
+            {subscribers && (subscribers.length !== 0) && (
+              <div className='grid grid-cols-2'>
                 <InfoCard className='col-span-1 items-center' title='subscribers'>
                   <div className='grid grid-cols-6 py-2 px-10 gap-2'>
                     { subscribers.map(subscriber => (
@@ -232,13 +241,13 @@ export const Repository = () => {
                     }
                   </div>
                 </InfoCard>
-              )}
-              {!subscribers && (
-                <div className='mx-auto text-xl'>
-                  No subscribers yet
-                </div>
-              )}
-            </div>
+              </div>
+            )}
+            {(!subscribers || subscribers.length === 0) && (
+              <div className='mx-auto text-xl'>
+                No subscribers yet
+              </div>
+            )}
         </SectionCard>
         <SectionCard title="where it's at">
           {releases && (releases.length !== 0) && (
@@ -257,7 +266,10 @@ export const Repository = () => {
             {releases[0].prerelease && <Badge color='gray'>prerelease</Badge>}
             {releases[0].body && (
               <Card>
-                {styleTextWithComments(releases[0].body)}
+                { releases[0].body
+                    ? styleTextWithComments(releases[0].body, { commentClass: 'my-2 text-gray-500', textClass: 'my-2 text-gray-300' })
+                    : <p className='my-2 text-gray-500'>-- No details provided --</p>
+                }
               </Card>
             )}
             </>

@@ -12,6 +12,7 @@ import { SectionCard } from 'components/presentation/section-card';
 import { IssueCard } from 'components/domain/issue-card';
 import { EntityCard } from 'components/domain/entity-card';
 import { styleTextWithComments } from 'lib/style-text-with-comments';
+import { IconCounter } from 'components/presentation/icon-counter';
 
 const createBarChart = (dict) => {
   const total = Object.values(dict).reduce((a,b) => Number(a) + Number(b));
@@ -75,18 +76,24 @@ export const Repository = () => {
                 </div>
               </div>
               <div className='col-span-2 grid grid-cols-3 justify-end my-2 h-16'>
-                <div className='p-4 flex justify-center items-center border rounded-l-md'>
-                  <span className='mr-2'><StarIcon size={32} /></span>
-                  <span className='text-xl'>{repo.stargazers_count || 0}</span>
-                </div>
-                <div className='p-4 flex justify-center items-center border'>
-                  <span className='mr-2'><RepoForkedIcon size={32} /></span>
-                  <span className='text-xl'>{repo.forks_count || 0}</span>
-                </div>
-                <div className='p-4 flex justify-center items-center border rounded-r-md'>
-                  <span className='mr-2'><EyeIcon size={32} /></span>
-                  <span className='text-xl'>{repo.watchers_count || 0}</span>
-                </div>
+                <IconCounter
+                  className='border rounded-l-md'
+                  icon={<StarIcon size={32} />}
+                  value={repo.stargazers_count || 0}
+                  valueClass='text-xl'
+                />
+                <IconCounter
+                  className='border'
+                  icon={<RepoForkedIcon size={32} />}
+                  value={repo.forks_count || 0}
+                  valueClass='text-xl'
+                />
+                <IconCounter
+                  className='border rounded-r-md'
+                  icon={<EyeIcon size={32} />}
+                  value={repo.watchers_count || 0}
+                  valueClass='text-xl'
+                />
               </div>
             </div>
             <div className='my-2 flex items-center'>

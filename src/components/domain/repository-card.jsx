@@ -98,7 +98,7 @@ RepositoryCard.propTypes = {
       id: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number
-      ]).isRequired,
+      ]),
       author: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       language: PropTypes.string,

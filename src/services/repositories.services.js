@@ -1,7 +1,7 @@
 import { TRENDING_API_BASE, GITHUB_API_BASE } from "const";
 import { fetchJson } from "lib/fetch-json";
 
-const GITHUB_TOKEN = process.env.REACT_APP_CLIENT_TOKEN;
+const GITHUB_TOKEN = process.env.REACT_APP_CLIENT_TOKEN || null;
 
 function trimParams(url) {
   return url.match(/^(.*:\/\/)?(\w*\.*\/*-*)*/)[0];
@@ -35,7 +35,7 @@ export const getRepository = (queries) => {
   const { author, name } = queries;
   const url = `${GITHUB_API_BASE}/repos/${author}/${name}`;
   return fetchJson(url, {
-    headers: {
+    headers: GITHUB_TOKEN && {
       Authorization: `token ${GITHUB_TOKEN}`
     }
   });
@@ -57,7 +57,7 @@ export const getSecondaryRepositoryData = async (repository) => {
     Object.keys(secondaryDataUrl).map(async name =>
       (secondaryDataUrl[name])
         ? secondaryData[name] = await fetchJson(secondaryDataUrl[name], {
-            headers: {
+            headers: GITHUB_TOKEN && {
               Authorization: `token ${GITHUB_TOKEN}`
             }
           })

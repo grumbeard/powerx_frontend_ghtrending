@@ -9,7 +9,7 @@ export const useRepositories = () => {
   
   const query = useQuery(['repositories', period, language, spokenLanguage], () => {
     return getRepositories({ period, language, spokenLanguage });
-  }, { keepPreviousData: true });
+  });
   
   return {
     ...query,

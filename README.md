@@ -24,16 +24,20 @@ To see the styleguide on LocalHost, run
 Demonstrate techniques learned from Module by creating a Single Page Application utilizing an open-source API from https://github.com/public-apis/public-apis.
 
 ** Requirements **
+
 Routes (minimum):
 - [X] A Listings page
 - [X] A Details page: Shows data from API
+
 Features:
 - [X] User should be able to bookmark items (e.g. favourite listing)
 - [X] User should be able to see their bookmarked items in the Home Page
 - [X] Bookmarked items can be saved in Local Storage
+
 Style Guide:
 - [X] React Styleguidist (`react-styleguidist`)
-Reployment:
+
+Deployment:
 - [X] Netlify
 
 

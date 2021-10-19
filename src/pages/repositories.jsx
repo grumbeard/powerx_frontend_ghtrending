@@ -3,12 +3,11 @@ import { useRepositories } from 'hooks/use-repositories';
 import { useLanguages } from 'hooks/use-languages';
 import { useSpokenLanguages } from 'hooks/use-spoken-languages';
 import { useBookmarks } from 'hooks/use-bookmarks';
-import { Card } from 'components/presentation/card';
 import { ThreeBarsIcon, XIcon, HeartFillIcon } from '@primer/octicons-react';
 import { SideBar } from 'components/presentation/sidebar';
 import { SideBarToggle } from 'components/presentation/sidebar-toggle';
-import { Link } from 'react-router-dom';
 import { useRef } from 'react';
+import { BookmarkCard } from 'components/domain/bookmark-card';
 
 function filterDuplicates(data) {
   return [...new Set(data)];
@@ -79,20 +78,11 @@ export const Repositories = () => {
         className='w-4/5 lg:w-full col-span-6 lg:col-span-1 bg-black'
       >
         {bookmarks && (bookmarks.length !== 0) && bookmarks.map(bookmark => 
-          <Card key={`${bookmark.author}-${bookmark.name}`} className='relative'>
-            <div>
-              <Link to={`/${bookmark.author}/${bookmark.name}`}>
-                <span className='line-clamp-1 underline'>{bookmark.name}</span>
-              </Link>
-            </div>
-            <div className='text-sm flex'>
-              <span className='mr-2'>by</span>
-              <span className='line-clamp-1'>{bookmark.author}</span>
-            </div>
-            <span onClick={() => handleRemoveBookmark(bookmark)} className='p-2 hover:bg-gray-700 rounded-full flex place-content-center absolute right-2 top-2'>
-              <HeartFillIcon size={16} />
-            </span>
-          </Card>
+          <BookmarkCard
+            key={`${bookmark.author}-${bookmark.name}`}
+            handleRemove={handleRemoveBookmark}
+            bookmark={bookmark}
+          />
         )}
         {(!bookmarks || (bookmarks.length === 0)) && (
           <div className='mt-10 text-xl text-center text-gray-500'>

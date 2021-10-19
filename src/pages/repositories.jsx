@@ -5,8 +5,10 @@ import { useSpokenLanguages } from 'hooks/use-spoken-languages';
 import { useBookmarks } from 'hooks/use-bookmarks';
 import { Card } from 'components/presentation/card';
 import { ThreeBarsIcon, XIcon, HeartFillIcon } from '@primer/octicons-react';
+import { SideBar } from 'components/presentation/sidebar';
+import { SideBarToggle } from 'components/presentation/sidebar-toggle';
 import { Link } from 'react-router-dom';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 function filterDuplicates(data) {
   return [...new Set(data)];
@@ -19,7 +21,6 @@ const DATE_RANGE = {
 };
 
 export const Repositories = () => {
-  const [isSideBarExpanded, setIsSideBarExpanded] = useState(false);
   
   const {
     data: repositories,
@@ -62,12 +63,6 @@ export const Repositories = () => {
     );
   };
   
-  const toggleSideBar = () => {
-    sideBarRef.current.classList.toggle('hidden');
-    mainContentRef.current.classList.toggle('lg:col-span-5');
-    setIsSideBarExpanded(!isSideBarExpanded);
-  };
-  
   const sideBarRef = useRef();
   const mainContentRef = useRef();
   
@@ -79,7 +74,10 @@ export const Repositories = () => {
     </header>
     <main className='grid grid-cols-6 relative'>
       {/* Bookmarks Side Bar */}
-      <section className='w-4/5 lg:w-full mx-auto py-10 px-2 col-span-6 lg:col-span-1 bg-black hidden' ref={sideBarRef}>
+      <SideBar
+        ref={sideBarRef}
+        className='w-4/5 lg:w-full col-span-6 lg:col-span-1 bg-black'
+      >
         {bookmarks && (bookmarks.length !== 0) && bookmarks.map(bookmark => 
           <Card key={`${bookmark.author}-${bookmark.name}`} className='relative'>
             <div>
@@ -102,7 +100,7 @@ export const Repositories = () => {
             <HeartFillIcon size={16} />
           </div>
         )}
-      </section>
+      </SideBar>
       {/* Main Content Area */}
       <section className='col-span-6' ref={mainContentRef}>
         <div className='w-4/5 mx-auto mt-10 flex flex-col lg:flex-row justify-end items-center border border-gray-400 rounded-t-md bg-gray-800 bg-opacity-50'>
@@ -187,15 +185,17 @@ export const Repositories = () => {
         </div>
       </section>
       {/* Side Bar Toggle */}
-      <div onClick={toggleSideBar} className='absolute left-2 top-2 flex items-center'>
-        <span className='mr-2'>
-          {isSideBarExpanded
-            ? <XIcon size={24} />
-            : <ThreeBarsIcon size={24} />
-          }
-        </span>
-        <p className='uppercase'>liked</p>
-      </div>
+      <SideBarToggle
+        isInitiallyExpanded={false}
+        sideBarRef={sideBarRef}
+        sideBarClassOnToggle='hidden'
+        mainContentRef={mainContentRef}
+        mainContentClassOnToggle='lg:col-span-5'
+        toggleIconExpanded={<XIcon size={24} />}
+        toggleIconClosed={<ThreeBarsIcon size={24} />}
+        toggleLabel='menu'
+        className='absolute left-2 top-2'
+      />
     </main>
     </>
   );

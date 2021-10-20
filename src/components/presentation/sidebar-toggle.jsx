@@ -1,13 +1,14 @@
 /* Side Bar Toggle */
 import cn from "classnames";
 import { useState } from "react";
+import { PropTypes } from 'prop-types';
 
 export const SideBarToggle = ({
   isInitiallyExpanded,
   sideBarRef,
-  sideBarClassOnToggle,
+  sideBarClassToToggle,
   mainContentRef,
-  mainContentClassOnToggle,
+  mainContentClassToToggle,
   toggleIconExpanded,
   toggleIconClosed,
   toggleLabel,
@@ -18,11 +19,11 @@ export const SideBarToggle = ({
     props.className
   );
   
-  const [isSideBarExpanded, setIsSideBarExpanded] = useState(isInitiallyExpanded);
+  const [isSideBarExpanded, setIsSideBarExpanded] = useState(isInitiallyExpanded || false);
   
   const toggleSideBar = () => {
-    sideBarRef.current.classList.toggle(sideBarClassOnToggle);
-    mainContentRef.current.classList.toggle(mainContentClassOnToggle);
+    if (sideBarRef.current) sideBarRef.current.classList.toggle(sideBarClassToToggle);
+    if (mainContentRef.current) mainContentRef.current.classList.toggle(mainContentClassToToggle);
     setIsSideBarExpanded(!isSideBarExpanded);
   };
   
@@ -31,6 +32,8 @@ export const SideBarToggle = ({
       <span className='mr-2'>
         {isSideBarExpanded
           ? toggleIconExpanded
+            ? toggleIconExpanded
+            : toggleIconClosed
           : toggleIconClosed
         }
       </span>
@@ -39,4 +42,19 @@ export const SideBarToggle = ({
     }
     </div>
   );
+};
+
+SideBarToggle.propTypes = {
+  isInitiallyExpanded: PropTypes.bool,
+  sideBarRef: PropTypes.object.isRequired,
+  sideBarClassToToggle: PropTypes.string,
+  mainContentRef: PropTypes.object.isRequired,
+  mainContentClassToToggle: PropTypes.string,
+  toggleIconExpanded: PropTypes.element,
+  toggleIconClosed: PropTypes.element.isRequired,
+  toggleLabel: PropTypes.string
+};
+
+SideBarToggle.defaultProps = {
+  isInitiallyExpanded: false
 };

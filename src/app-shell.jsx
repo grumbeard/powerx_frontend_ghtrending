@@ -9,18 +9,20 @@ export const AppShell = ({children}) => {
   
   const toggleSeachForm = () => {
     setIsSearchFormActive(!isSearchFormActive);
-    searchFormRef.current.classList.toggle('hidden');
+    if (searchFormRef.current) searchFormRef.current.classList.toggle('hidden');
   }
   
   const [name, setName] = useState('');
   const [author, setAuthor] = useState('');
   
   const history = useHistory();
+  const nameInputRef = useRef();
   
   const handleFormSubmit = () => {
     history.push(`/${author}/${name}`);
     toggleSeachForm();
     clearForm();
+    if (nameInputRef.current) nameInputRef.current.focus();
   };
   
   const clearForm = () => {
@@ -58,16 +60,17 @@ export const AppShell = ({children}) => {
             <input
               type='text'
               name='author'
-              className='appearance-none border rounded text-gray-300 bg-gray-900 uppercase'
+              className='appearance-none border rounded focus:outline-none focus:shadow-outline text-gray-300 bg-gray-900 uppercase'
               placeholder='Author'
               onChange={e => transformAndSetState(e.currentTarget.value, setAuthor)}
               value={author}
+              ref={nameInputRef}
             />
             <p className='text-xl'>/</p>
             <input
               type='text'
               name='name'
-              className='appearance-none border rounded text-gray-300 bg-gray-900 uppercase'
+              className='appearance-none border rounded focus:outline-none focus:shadow-outline text-gray-300 bg-gray-900 uppercase'
               placeholder='Name'
               onChange={e => transformAndSetState(e.currentTarget.value, setName)}
               value={name}

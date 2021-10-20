@@ -150,9 +150,9 @@ export const Repositories = () => {
       <SideBarToggle
         isInitiallyExpanded={false}
         sideBarRef={sideBarRef}
-        sideBarClassOnToggle='hidden'
+        sideBarClassToToggle='hidden'
         mainContentRef={mainContentRef}
-        mainContentClassOnToggle='lg:col-span-5'
+        mainContentClassToToggle='lg:col-span-5'
         toggleIconExpanded={<XIcon size={24} />}
         toggleIconClosed={<HeartFillIcon size={24} />}
         toggleLabel='list'

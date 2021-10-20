@@ -1,6 +1,6 @@
 Badges typically wrap around child elements that contain text. 
 
-Badge variants include 'Solid Badges' and 'Outline Badges' and are determined by an optional `color` property supplied. 
+Badge variants include 'Solid Badges' and 'Outline Badges' and are determined by an optional **`color`** property supplied. 
 
 
 ### Solid Badges

@@ -1,8 +1,8 @@
-IssueCard is a compound component utilizing `Card` and `Badge` and displays various details available about an `issue`. It relies on an optional `isOpen` property to create an 'accordion' effect.
+IssueCard is a compound component utilizing **`Card`** and **`Badge`** and displays various details available about an **`issue`**. It relies on an optional **`isOpen`** property to create an 'accordion' effect.
 
 A high-level overview of the issue is shown in the 'top' section. The 'bottom' section is hidden by default and displays the issue body.
 
-IssueCard variants are determined by the `state` of the `issue`. Based on the `state` of the `issue`, a status `Badge` is shown and if that `state` is 'open', the IssueCard will have a red border.
+IssueCard variants are determined by the **`state`** of the **`issue`**. Based on the **`state`** of the **`issue`**, a status **`Badge`** is shown and if that **`state`** is 'open', the IssueCard will have a red border.
 
 
 ```jsx

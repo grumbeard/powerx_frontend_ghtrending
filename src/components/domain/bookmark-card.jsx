@@ -1,7 +1,9 @@
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import { Card } from 'components/presentation/card';
+import { IconButton } from 'components/presentation/icon-button';
 import { HeartFillIcon } from '@primer/octicons-react';
+import { PropTypes } from 'prop-types';
 
 export const BookmarkCard = ({ bookmark, handleRemove, ...props }) => {
   const className = cn(
@@ -20,12 +22,19 @@ export const BookmarkCard = ({ bookmark, handleRemove, ...props }) => {
         <span className='mr-2'>by</span>
         <span className='line-clamp-1'>{bookmark.author}</span>
       </div>
-      <span
+      <IconButton
         onClick={() => handleRemove(bookmark)}
-        className='p-2 hover:bg-gray-700 rounded-full flex place-content-center absolute right-2 top-2'
-      >
-        <HeartFillIcon size={16} />
-      </span>
+        icon={<HeartFillIcon size={16} />}
+        className='absolute right-2 top-2 hover:bg-opacity-50'
+      />
     </Card>
   );
+};
+
+BookmarkCard.propTypes = {
+  bookmark: PropTypes.shape({
+    author: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+  }).isRequired,
+  handleRemove: PropTypes.func.isRequired,
 };

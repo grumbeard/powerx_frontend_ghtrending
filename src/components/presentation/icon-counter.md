@@ -1,4 +1,4 @@
-IconCounter combines an element containing an `icon` with some `value`. Borders may be added by supplying a `className` property.
+IconCounter combines an element containing an **`icon`** with some **`value`**. Borders may be added by supplying a **`className`** property.
 
 ### Icons with Only Required Props
 ```jsx

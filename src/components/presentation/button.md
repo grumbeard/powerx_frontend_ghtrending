@@ -1,4 +1,6 @@
-Buttons typically wrap around child elements that contain text. Button variants include 'Solid Buttons' and 'Outline Buttons' and are determined by an optional `color` property supplied.
+Buttons typically wrap around child elements that contain text. 
+
+Button variants include 'Solid Buttons' and 'Outline Buttons' and are determined by an optional **`color`** property supplied.
 
 ### Solid Buttons
 ```jsx

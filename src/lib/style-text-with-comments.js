@@ -20,9 +20,17 @@ export const styleTextWithComments = (
       const lines = text
         .replace('\r\n', '\n')
         .split('\n')
-        .map((line, index) => (
-          <p key={`${line}-${index}`} className={textClass}>{line}</p>
-        ))
+        .map((line, index) => {
+          const str = line.trim();
+          return str
+          ? <p
+              key={`${str}-${index}`}
+              className={textClass}
+            >
+              {str}
+            </p>
+          : <br/>;
+        })
       content.push(...lines)
     }
   }

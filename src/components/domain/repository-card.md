@@ -1,6 +1,6 @@
-RepositoryCard is a compound component utilizing `Card` and `Button` and presents a high-level overview of a `repository`.
+RepositoryCard is a compound component utilizing **`Card`** and **`Button`** and presents a high-level overview of a **`repository`**.
 
-RepositoryCard has a 'like' button that is toggled between its 'Outline' and 'Solid' variants based on the `isBookmarked` state of the `repository`.
+RepositoryCard has a 'like' button that is toggled between its 'Outline' and 'Solid' variants based on the **`isBookmarked`** state of the **`repository`**.
 
 
 ```jsx

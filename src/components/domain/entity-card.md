@@ -1,8 +1,8 @@
-EntityCard is a compound component utilizing `InfoCard`. It displays various details available about an `entity` (e.g. repository owner / organization). 
+EntityCard is a compound component utilizing **`InfoCard`**. It displays various details available about an **`entity`** (e.g. repository owner / organization). 
 
-An `avatar_url` for the `entity` is required and it is displayed in the 'left' section. Any other entity details supplied are displayed in the 'right' section.
+An **`avatar_url`** for the **`entity`** is required and it is displayed in the 'left' section. Any other entity details supplied are displayed in the 'right' section.
 
-EntityCard variants are determined by an optional `color` property supplied. The default value of `color` is 'gray'. All constraints for `InfoCard` apply.
+EntityCard variants are determined by an optional **`color`** property supplied. The default value of **`color`** is 'gray'. All constraints for **`InfoCard`** apply.
 
 
 ```jsx

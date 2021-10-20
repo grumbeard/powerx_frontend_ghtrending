@@ -3,11 +3,16 @@ import cn from "classnames";
 import { forwardRef } from "react";
 
 export const SideBar = forwardRef(function SideBar(
-  { children, ...props },
+  { children, isInitiallyExpanded, ...props },
   ref
 ) {
+  const visibility = isInitiallyExpanded
+    ? ''
+    : 'hidden';
+  
   const className = cn(
-    'mx-auto py-10 px-2 hidden',
+    'mx-auto py-10 px-2',
+    visibility,
     props.className
   );
   

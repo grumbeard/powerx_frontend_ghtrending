@@ -3,11 +3,10 @@ import { useRepositories } from 'hooks/use-repositories';
 import { useLanguages } from 'hooks/use-languages';
 import { useSpokenLanguages } from 'hooks/use-spoken-languages';
 import { useBookmarks } from 'hooks/use-bookmarks';
-import { ThreeBarsIcon, XIcon, HeartFillIcon } from '@primer/octicons-react';
-import { SideBar } from 'components/presentation/sidebar';
+import { ThreeBarsIcon, XIcon } from '@primer/octicons-react';
 import { SideBarToggle } from 'components/presentation/sidebar-toggle';
 import { useRef } from 'react';
-import { BookmarkCard } from 'components/domain/bookmark-card';
+import { BookmarksSideBar } from 'components/domain/bookmarks-sidebar';
 
 function filterDuplicates(data) {
   return [...new Set(data)];
@@ -32,7 +31,13 @@ export const Repositories = () => {
     setSpokenLanguage
   } = useRepositories();
   
-  const { bookmarks, setBookmarks } = useBookmarks();
+  const {
+    bookmarks,
+    isBookmarked,
+    handleAddBookmark,
+    handleRemoveBookmark
+  } = useBookmarks();
+  
   const {
     data: languages
   } = useLanguages();
@@ -40,27 +45,6 @@ export const Repositories = () => {
   const {
     data: spokenLanguages
   } = useSpokenLanguages();
-  
-  const isBookmarked = (repo) => {
-    const index = bookmarks.findIndex(bookmark =>
-      (bookmark.id && repo.id && (bookmark.id === repo.id))
-        || ((bookmark.author === repo.author) && (bookmark.name === repo.name))
-    );
-    return index >= 0;
-  };
-  
-  const handleAddBookmark = (repo) => {
-    if (!isBookmarked(repo)) setBookmarks(prevBookmarks => prevBookmarks.concat([repo]));
-  };
-  
-  const handleRemoveBookmark = (repo) => {
-    setBookmarks(prevBookmarks =>
-      prevBookmarks.filter(bookmark =>
-        (bookmark.id && repo.id && (bookmark.id !== repo.id))
-          || ((bookmark.author !== repo.author) && (bookmark.name !== repo.name))
-      )
-    );
-  };
   
   const sideBarRef = useRef();
   const mainContentRef = useRef();
@@ -73,24 +57,12 @@ export const Repositories = () => {
     </header>
     <main className='grid grid-cols-6 relative'>
       {/* Bookmarks Side Bar */}
-      <SideBar
-        ref={sideBarRef}
-        className='w-4/5 lg:w-full col-span-6 lg:col-span-1 bg-black'
-      >
-        {bookmarks && (bookmarks.length !== 0) && bookmarks.map(bookmark => 
-          <BookmarkCard
-            key={`${bookmark.author}-${bookmark.name}`}
-            handleRemove={handleRemoveBookmark}
-            bookmark={bookmark}
-          />
-        )}
-        {(!bookmarks || (bookmarks.length === 0)) && (
-          <div className='mt-10 text-xl text-center text-gray-500'>
-            <span className='mr-2'>Save your favourite repositories by clicking on</span>
-            <HeartFillIcon size={16} />
-          </div>
-        )}
-      </SideBar>
+      <BookmarksSideBar
+        bookmarks={bookmarks}
+        sideBarRef={sideBarRef}
+        handleRemove={handleRemoveBookmark}
+        sideBarClass='w-4/5 lg:w-full col-span-6 lg:col-span-1 bg-black'
+      />
       {/* Main Content Area */}
       <section className='col-span-6' ref={mainContentRef}>
         <div className='w-4/5 mx-auto mt-10 flex flex-col lg:flex-row justify-end items-center border border-gray-400 rounded-t-md bg-gray-800 bg-opacity-50'>

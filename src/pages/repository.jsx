@@ -143,10 +143,26 @@ export const Repository = () => {
                   <div className='my-2 flex items-center'>
                     {cloneSSH
                       ? <p className='flex-grow m-5 p-2 border border-gray-500 rounded-sm'>SSH: 
-                          <code className='bg-gray-500 bg-opacity-50 ml-10 p-2'>git clone {repo.ssh_url}</code>
+                          <code
+                            className='bg-gray-500 bg-opacity-50 ml-10 p-2'
+                            onClick={() => {
+                              navigator.clipboard.writeText(`git clone ${repo.ssh_url}`);
+                              alert('SSH Clone Command Copied');
+                            }}
+                          >
+                            git clone {repo.ssh_url}
+                          </code>
                         </p> 
                       : <p className='flex-grow m-5 p-2 border border-gray-500 rounded-sm'>HTTPS: 
-                          <code className='bg-gray-500 bg-opacity-50 ml-10 p-2'>git clone {repo.clone_url}</code>
+                          <code
+                            className='bg-gray-500 bg-opacity-50 ml-10 p-2'
+                            onClick={() => {
+                              navigator.clipboard.writeText(`git clone ${repo.clone_url}`);
+                              alert('HTTP Clone Command Copied');
+                            }}
+                          >
+                            git clone {repo.clone_url}
+                          </code>
                         </p>
                     }
                     <Button

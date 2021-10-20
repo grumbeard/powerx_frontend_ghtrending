@@ -89,7 +89,7 @@ export const Repository = () => {
                         <Link to={{ pathname: repo.html_url}} target='_blank'>
                           <p className='text-4xl underline'>{repo.full_name}</p>
                         </Link>
-                        {isBookmarked(repo)
+                        {isBookmarked({ id: repo.id, name, author})
                           ? <IconButton
                               onClick={handleRemove}
                               icon={<HeartFillIcon size={32} />}

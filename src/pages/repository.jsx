@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useRepository } from 'hooks/use-repositories';
-import { EyeIcon, HeartFillIcon, HeartIcon, RepoForkedIcon, RocketIcon, StarIcon, ThreeBarsIcon, XIcon } from '@primer/octicons-react';
+import { EyeIcon, HeartFillIcon, HeartIcon, RepoForkedIcon, RocketIcon, StarIcon, XIcon } from '@primer/octicons-react';
 import { Badge } from 'components/presentation/badge';
 import { Button } from 'components/presentation/button';
 import { Bar } from 'components/presentation/bar';
@@ -16,6 +16,7 @@ import { IconCounter } from 'components/presentation/icon-counter';
 import { BookmarksSideBar } from 'components/domain/bookmarks-sidebar';
 import { useBookmarks } from 'hooks/use-bookmarks';
 import { SideBarToggle } from 'components/presentation/sidebar-toggle';
+import { IconButton } from 'components/presentation/icon-button';
 
 const createBarChart = (dict) => {
   const total = Object.values(dict).reduce((a,b) => Number(a) + Number(b));
@@ -51,20 +52,11 @@ export const Repository = () => {
   } = useBookmarks();
   
   const handleRemove = () => {
-    const mappedRepo = mapFields(repo)
-    handleRemoveBookmark(mappedRepo);
+    handleRemoveBookmark({ id: repo.id, name, author});
   };
-  const handleAdd = () => {
-    const mappedRepo = mapFields(repo);
-    handleAddBookmark(mappedRepo);
+  const handleAdd = () => {;
+    handleAddBookmark({ id: repo.id, name, author });
   };
-  
-  const mapFields = (unmappedRepo) => {
-    const mappedRepo = JSON.parse(JSON.stringify(unmappedRepo));
-    mappedRepo.name = name;
-    mappedRepo.author = author;
-    return mappedRepo;
-  }
   
   const sideBarRef = useRef();
   const mainContentRef = useRef();
@@ -75,15 +67,18 @@ export const Repository = () => {
         <h1>{name}</h1>
       </header>
       <main className='grid grid-cols-6 relative'>
-        {/* Bookmarks Side Bar */}
-        <BookmarksSideBar
-          bookmarks={bookmarks}
-          sideBarRef={sideBarRef}
-          handleRemove={handleRemoveBookmark}
-          sideBarClass='w-4/5 lg:w-full col-span-6 lg:col-span-1 bg-black'
-        />
-        {/* Main Content Area */}
         {repo && (
+          <>
+          {/* Bookmarks Side Bar */}
+          { bookmarks &&
+            <BookmarksSideBar
+              bookmarks={bookmarks}
+              sideBarRef={sideBarRef}
+              handleRemove={handleRemoveBookmark}
+              sideBarClass='w-4/5 lg:w-full col-span-6 lg:col-span-1 bg-black'
+            />
+          }
+          {/* Main Content Area */}
           <section className='col-span-6' ref={mainContentRef}>
             <div className='w-4/5 mx-auto'>
               {/* Repository Summary */}
@@ -95,18 +90,14 @@ export const Repository = () => {
                           <p className='text-4xl underline'>{repo.full_name}</p>
                         </Link>
                         {isBookmarked(repo)
-                          ? <span
+                          ? <IconButton
                               onClick={handleRemove}
-                              className='mx-2 p-2 hover:bg-gray-700 hover:bg-opacity-25 hover:cursor-pointer rounded-full flex place-content-center'
-                            >
-                              <HeartFillIcon size={32} />
-                            </span>
-                          : <span
+                              icon={<HeartFillIcon size={32} />}
+                            />
+                          : <IconButton
                               onClick={handleAdd}
-                              className='mx-2 p-2 hover:bg-gray-700 hover:bg-opacity-25 hover:cursor-pointer rounded-full flex place-content-center'
-                            >
-                              <HeartIcon size={32} />
-                            </span>
+                              icon={<HeartIcon size={32} />}
+                            />
                         }
                       </div>
                       <div className='my-2'>
@@ -356,19 +347,22 @@ export const Repository = () => {
               </SectionCard>
             </div>
           </section>
+          {/* Side Bar Toggle */}
+          {bookmarks &&
+            <SideBarToggle
+              isInitiallyExpanded={false}
+              sideBarRef={sideBarRef}
+              sideBarClassOnToggle='hidden'
+              mainContentRef={mainContentRef}
+              mainContentClassOnToggle='lg:col-span-5'
+              toggleIconExpanded={<XIcon size={24} />}
+              toggleIconClosed={<HeartFillIcon size={24} />}
+              toggleLabel='list'
+              className='absolute left-0 top-0 py-2 pl-4 pr-8 rounded-br-md bg-black'
+            />
+          }
+          </>
         )}
-        {/* Side Bar Toggle */}
-        <SideBarToggle
-          isInitiallyExpanded={false}
-          sideBarRef={sideBarRef}
-          sideBarClassOnToggle='hidden'
-          mainContentRef={mainContentRef}
-          mainContentClassOnToggle='lg:col-span-5'
-          toggleIconExpanded={<XIcon size={24} />}
-          toggleIconClosed={<ThreeBarsIcon size={24} />}
-          toggleLabel='menu'
-          className='absolute left-2 top-2'
-        />
       </main>
       {
         (status !== 'success') && (

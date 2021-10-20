@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Card } from "../presentation/card";
 import { PropTypes } from 'prop-types';
 import { IconCounter } from "components/presentation/icon-counter";
+import { IconButton } from "components/presentation/icon-button";
 
 export const RepositoryCard = (props) => {
   const {
@@ -13,7 +14,6 @@ export const RepositoryCard = (props) => {
   } = props;
   
   const {
-    id,
     author,
     name,
     language,
@@ -25,8 +25,8 @@ export const RepositoryCard = (props) => {
     avatar
   } = repository;
   
-  const handleAddBookmark = () => addBookmark({id, author, name});
-  const handleRemoveBookmark = () => removeBookmark({id, author, name});
+  const handleAddBookmark = () => addBookmark({author, name});
+  const handleRemoveBookmark = () => removeBookmark({author, name});
   
   return (
     <Card
@@ -67,26 +67,19 @@ export const RepositoryCard = (props) => {
         </Link>
         <div className='md:col-span-1 flex items-center md:justify-end'>
           {isBookmarked
-            ? <span
+            ? <IconButton
                 onClick={handleRemoveBookmark}
-                className='mx-2 p-2 hover:bg-gray-700 hover:bg-opacity-25 hover:cursor-pointer rounded-full flex place-content-center'
-              >
-                <HeartFillIcon size={32} />
-              </span>
-            : <span
+                icon={<HeartFillIcon size={32} />}
+              />
+            : <IconButton
                 onClick={handleAddBookmark}
-                className='mx-2 p-2 hover:bg-gray-700 hover:bg-opacity-25 hover:cursor-pointer rounded-full flex place-content-center'
-              >
-                <HeartIcon size={32} />
-              </span>
+                icon={<HeartIcon size={32} />}
+              />
           }
-          <Link to={{ pathname: url }} target='_blank'>
-            <span
-              className='mx-2 p-2 hover:bg-gray-700 hover:bg-opacity-25 rounded-full flex place-content-center'
-            >
-              <MarkGithubIcon size={32} />
-            </span>
-          </Link>
+          <IconButton
+            link={{ pathname: url }}
+            icon={<MarkGithubIcon size={32} />}
+          />
         </div>
       </div>
     </Card>
@@ -95,10 +88,6 @@ export const RepositoryCard = (props) => {
 
 RepositoryCard.propTypes = {
     repository: PropTypes.shape({
-      id: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number
-      ]),
       author: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       language: PropTypes.string,

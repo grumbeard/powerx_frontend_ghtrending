@@ -14,7 +14,7 @@ export const SideBarToggle = ({
   ...props
 }) => {
   const className = cn(
-    'flex items-center',
+    'flex items-center cursor-pointer',
     props.className
   );
   

@@ -3,7 +3,7 @@ import { useRepositories } from 'hooks/use-repositories';
 import { useLanguages } from 'hooks/use-languages';
 import { useSpokenLanguages } from 'hooks/use-spoken-languages';
 import { useBookmarks } from 'hooks/use-bookmarks';
-import { ThreeBarsIcon, XIcon } from '@primer/octicons-react';
+import { HeartFillIcon, XIcon } from '@primer/octicons-react';
 import { SideBarToggle } from 'components/presentation/sidebar-toggle';
 import { useRef } from 'react';
 import { BookmarksSideBar } from 'components/domain/bookmarks-sidebar';
@@ -154,9 +154,9 @@ export const Repositories = () => {
         mainContentRef={mainContentRef}
         mainContentClassOnToggle='lg:col-span-5'
         toggleIconExpanded={<XIcon size={24} />}
-        toggleIconClosed={<ThreeBarsIcon size={24} />}
-        toggleLabel='menu'
-        className='absolute left-2 top-2'
+        toggleIconClosed={<HeartFillIcon size={24} />}
+        toggleLabel='list'
+        className='absolute left-0 top-0 py-2 pl-4 pr-8 rounded-br-md bg-black'
       />
     </main>
     </>
